@@ -13,6 +13,7 @@ import { theme } from '../../../shared/themes/theme';
 import { textTypes } from '../../../shared/components/text/textTypes';
 import { Icon } from '../../../shared/icon/Icon';
 import Carrossel from '../../../shared/components/carousel/Carousel';
+import Grafico from '../../../shared/components/grafico/Grafico';
 
 // const SLIDER_WIDTH = Dimensions.get('window').width;
 // const ITEM_WIDTH = SLIDER_WIDTH * 0.88;
@@ -35,8 +36,8 @@ const Home = () => {
         });
     }, []);
     return (
-        <View>
-            
+        <View >
+            <Grafico/>
         <HomeContainerInfo>
             <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Campanha vigente :{nome}</Text>
             <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Período da campanha :{campanha}</Text>
@@ -51,7 +52,6 @@ const Home = () => {
                 <Icon name="coin-dollar" size={60} color={theme.colors.neutraTheme.black} />
             </WhiteSquare>
         </HomeContainer>
-        
     </View>
     );
 };
