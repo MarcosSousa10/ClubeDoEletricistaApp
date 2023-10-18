@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 export interface InfoType {
-    codprofissional: number;
+    codprofissional: string;
     dtcadastro: string;
     profissao: string;
     cnpj: string;

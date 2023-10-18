@@ -14,7 +14,6 @@ const Carrossel = () => {
   const scrollViewRef = useRef<ScrollView | null>(null);
   const imageIndexRef = useRef(0);
 
-  // Array para armazenar as imagens
   useEffect(() => {
     const fetchImages = () => {
       request<CarrocelType>({

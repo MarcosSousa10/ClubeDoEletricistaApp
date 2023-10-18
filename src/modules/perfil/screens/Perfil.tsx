@@ -1,29 +1,48 @@
 /* eslint-disable prettier/prettier */
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Text from '../../../shared/components/text/Text';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HomeContainerInfo } from '../styles/perfil.style';
 import Button from '../../../shared/components/button/Button';
-import { logout } from '../../../shared/functions/connection/auth';
+import { gettCodProf, logout } from '../../../shared/functions/connection/auth';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { useRequest } from '../../../shared/hooks/useRequest';
+import { MethodEnum } from '../../../enums/methods.enum';
+import { InformacaoType } from '../../../types/InformacaoType';
+import moment from 'moment';
+import Overlay from 'react-native-loading-spinner-overlay';
 
 const Perfil = () => {
+  const [informacao, setInformacao] = useState<InformacaoType>();
+  const { request,loading } = useRequest();
 
-    const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
+  useEffect(() => {
+    const verifyLogin = async () => {
+      request<InformacaoType>({
+        url: `https://othondecarvalho.com.br:5555/pc/informacao/${await gettCodProf()}`,
+        method: MethodEnum.GET,
+      }).then((Response) => { setInformacao(Response); });
+    };
+    verifyLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   return (
     <View>
-     <HomeContainerInfo>
-                <Text color="black">Nome:</Text>
-                <Text color="black">Data de Cadastro:</Text>
-                <Text color="black">cnpj:</Text>
-                <Text color="black">codprofissional:</Text>
-                <Text color="black">dtcadastro:</Text>
-      </HomeContainerInfo>
-      <View>
-                <Button title="SAIR" onPress={() => { logout(navigation); }} />
-            </View>
+            <Overlay visible={loading} />
+      <HomeContainerInfo>
+          <Text color="black">Nome: {informacao?.descricao}</Text>
+          <Text color="black">Data de Cadastro: {moment(informacao?.dtcadastro).format("DD/MM/YY")}</Text>
+          <Text color="black">cnpj: {informacao?.cnpj}</Text>
+          <Text color="black">codigo do profissional: {informacao?.codprofissional}</Text>
+          <Text color="black">Data Da Ultima Compra: {informacao?.tipoprof ? moment(informacao?.tipoprof).format("DD/MM/YYYY") : "Não Foi Localizado Data Da Ultima Compra"}</Text>
+        </HomeContainerInfo><View>
+            <Button title="SAIR" onPress={() => { logout(navigation); } } />
+          </View>
     </View>
   );
 };
 export default Perfil;
+
+

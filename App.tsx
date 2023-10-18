@@ -14,7 +14,7 @@ import {Icon} from './src/shared/icon/Icon';
 import {theme} from './src/shared/themes/theme';
 import Perfil from './src/modules/perfil';
 import Informacao from './src/modules/Informacoes';
-import Caousel from './src/shared/components/carousel/Carousel';
+import Administrador from './src/modules/administrador';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,11 +63,11 @@ const TabNavigation = () => {
       <Tab.Screen
         name={MenuUrl.INFORMACAO}
         component={Informacao}
-        options={{title: 'Informações', headerShown: false}}
+        options={{title: 'Sobre', headerShown: false}}
       />
       <Tab.Screen
         name={MenuUrl.ADMINISTRADOR}
-        component={Caousel}
+        component={Administrador}
         options={{title: 'Administrador', headerShown: false}}
       />
       <Tab.Screen
