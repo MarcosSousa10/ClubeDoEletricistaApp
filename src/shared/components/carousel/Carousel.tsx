@@ -7,7 +7,7 @@ import { URL_CARROCEL } from '../../constants/url';
 import { MethodEnum } from '../../../enums/methods.enum';
 
 const larguraDaTela = Dimensions.get('window').width;
-
+console.log(larguraDaTela);
 const Carrossel = () => {
   const { request } = useRequest();
   const [images, setImages] = useState([]);
@@ -53,7 +53,7 @@ const Carrossel = () => {
     >
       {images.map((image, index) => (
         <View key={index} style={{ width: larguraDaTela , alignItems:'center' }}>
-          <Image source={{ uri: image }} width={larguraDaTela -10} style={{ width: larguraDaTela -5, height: 100}} />
+          <Image source={{ uri: image }} width={larguraDaTela - 10} style={{ width: larguraDaTela - 5, height: 90 }} />
         </View>
       ))}
     </ScrollView>
