@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { Image, RefreshControl, ScrollView, View } from 'react-native';
 import Text from '../../../shared/components/text/Text';
 import React, { useEffect, useState } from 'react';
 import { HomeContainerInfo } from '../styles/perfil.style';
@@ -44,7 +44,12 @@ const Perfil = () => {
           <Text color="black">cnpj: {informacao?.cnpj}</Text>
           <Text color="black">codigo do profissional: {informacao?.codprofissional}</Text>
           <Text color="black">Data Da Ultima Compra: {informacao?.tipoprof ? moment(informacao?.tipoprof).format("DD/MM/YYYY") : "Não Foi Localizado Data Da Ultima Compra"}</Text>
-        </HomeContainerInfo><View>
+        </HomeContainerInfo>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Image resizeMode="contain" style={{width: 200 , height: 100 , marginBottom: 24}} source={require('./image/pretoLuminato.png')} />
+
+        </View>
+        <View>
             <Button title="SAIR" onPress={() => { logout(navigation); } } />
           </View>
     </ScrollView>
