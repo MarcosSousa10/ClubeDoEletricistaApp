@@ -23,27 +23,28 @@ const Home = () => {
     const [nome, setNome] = useState<string>();
     const [campanha, setCampanha] = useState<string>();
     const [pontuacao, SetPontuacao] = useState<Pontuacaotype>();
-    useEffect(()  => {
-        const verifyLogin = async () => {
-
+    const verifyLogin = async () => {
         request<Pontuacaotype>({
             url: `${URL_PONTUACAO}${await gettCodProf()}`,
             method: MethodEnum.GET,
         }).then((Response) => { return SetPontuacao(Response);
         });
+    };
+    useEffect(()  => {
         request<CampanhaType>({
             url: `${URL_CAMPANHA}`,
             method: MethodEnum.GET,
+
         }).then((Response) => {
-            return setCampanha(Response?.periodo),
+             setCampanha(Response?.periodo);
                 setNome(Response?.nome);
+                verifyLogin();
         });
-    };
-        verifyLogin();
-    }, []);
+        
+    }, [campanha]);
     return (
         <ScrollView >
-      <Overlay visible={loading} />
+       <Overlay visible={loading} />
         <HomeContainerInfo>
                     <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Campanha vigente :{nome}</Text>
                     <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Período da campanha :{campanha}</Text>
@@ -51,11 +52,12 @@ const Home = () => {
                         <WhiteSquare>
                             <Text>Pontuação</Text>
                             <BoldNumber>
-                                {pontuacao?.pontuacao ? pontuacao?.pontuacao : 0}
+                            {pontuacao?.pontuacao ? pontuacao?.pontuacao : 0}
                             </BoldNumber>
                             <Icon name="coin-dollar" size={60} color={theme.colors.neutraTheme.black} />
                         </WhiteSquare>
-                    </HomeContainer><Grafico />
+                    </HomeContainer>
+                    <Grafico />
     </ScrollView>
     );
 };

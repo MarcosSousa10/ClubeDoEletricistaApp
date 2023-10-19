@@ -10,7 +10,7 @@ import Text from '../../../shared/components/text/Text';
 import { textTypes } from '../../../shared/components/text/textTypes';
 
 export const Login = () => {
-  const {login,handleOnChangeCnpj,password,handleOnChangePassword,handleOnPress} = useLogin();
+  const {login,handleOnChangeCnpj,password,handleOnChangePassword,handleOnPress,loading} = useLogin();
 
 
   return (
@@ -29,6 +29,7 @@ export const Login = () => {
             </Text>
         </TouchableOpacity>
       <Button
+          loading={loading}
           type={theme.buttons.buttonsTheme.primary}
           title="ENTRAR"
           onPress={handleOnPress}

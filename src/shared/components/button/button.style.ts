@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { theme } from '../../themes/theme';
 import LinearGradient from 'react-native-linear-gradient';
 interface ButtonContainerProps {
-  margin: string;
+  margin?: string;
 }
 
 export const ButtonContainer = styled.TouchableOpacity<ButtonContainerProps>`
@@ -13,7 +13,7 @@ export const ButtonContainer = styled.TouchableOpacity<ButtonContainerProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  ${(props: { margin: any; }) => (props.margin ? `margin:${props.margin};` : '')}
+  ${(props: {margin: any}) => (props.margin ? `margin:${props.margin};` : '')}
 `;
 export const GrandientButton = styled(LinearGradient)<ButtonContainerProps>`
   width: 100%;
@@ -22,10 +22,10 @@ export const GrandientButton = styled(LinearGradient)<ButtonContainerProps>`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  ${(props: { margin: any; }) => (props.margin ? `margin:${props.margin};` : '')}
+  ${(props: {margin: any}) => (props.margin ? `margin:${props.margin};` : '')}
 `;
 export const ButtonSecondary = styled(ButtonContainer)<ButtonContainerProps>`
-  ${(props: { margin: any; }) => (props.margin ? `margin:${props.margin};` : '')}
+  ${(props: {margin: any}) => (props.margin ? `margin:${props.margin};` : '')}
 
   background-color: transparent;
 

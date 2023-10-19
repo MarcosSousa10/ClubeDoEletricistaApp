@@ -6,16 +6,12 @@ import { useRequest } from '../../../shared/hooks/useRequest';
 export const useLogin = () => {
   const [login, setCpnj] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const {authRequest,InfoRequests } = useRequest();
+  const {authRequest,loading } = useRequest();
   const handleOnPress = async () => {
     authRequest({
         login,
         password,
      });
-     InfoRequests({
-      login,
-      password,
-   }).then(resposta=> console.log(resposta));
      };
   const handleOnChangeCnpj = (
     event: NativeSyntheticEvent<TextInputChangeEventData>,
@@ -28,6 +24,7 @@ export const useLogin = () => {
     setPassword(event.nativeEvent.text);
   };
   return {
+    loading,
     login,
     password,
     handleOnChangePassword,

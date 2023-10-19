@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { ActivityIndicatorButton, ButtonContainer, ButtonDisabled, ButtonSecondary, GrandientButton } from './button.style';
+import Text from '../text/Text';
 import { theme } from '../../themes/theme';
 import { textTypes } from '../text/textTypes';
-import Text from '../text/Text';
+import React from 'react';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
