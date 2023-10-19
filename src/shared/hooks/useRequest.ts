@@ -7,6 +7,7 @@ import { setAuthorizationToken, setCodCnpj, setCodProf } from '../functions/conn
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { MenuUrl } from '../components/enums/MenuUrl.enum';
 import { InfoType } from '../../types/infoType';
+import { useGlobalRducer } from '../../story/reducers/globalReducer/useGlobalReducer';
 export const useRequest = () => {
   
   interface requestProps<T, B = unknown> {
@@ -14,22 +15,32 @@ export const useRequest = () => {
     method: MetgoType;
     saveGlobal?: (object: T) => void;
     body?: B;
+    message?: string;
   }
   const { reset } = useNavigation<NavigationProp<ParamListBase>>();
   // const Navigation  = useNavigation<NavigationProp<ParamListBase>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [grafico, setGrafico] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const {setModal} = useGlobalRducer();
 
-  const request = async <T, B = unknown>({ url, method, saveGlobal, body }: requestProps<T, B>): Promise<T | undefined> => {
+  const request = async <T, B = unknown>({ url, method, saveGlobal, body,message }: requestProps<T, B>): Promise<T | undefined> => {
     setLoading(true);
     const returnObject: T | undefined = await ConnectionAPI.connect<T, B>(url, method, body).then(
       (result) => {
         if (saveGlobal) {
           saveGlobal(result);
         }
+        if (message){
+          setModal({
+            visible:true,
+            title:'Sucesso',
+            text: message,
+          });
+        }
         return result;
       }
-    ).catch(() => {
+    ).catch(()=>{
       return undefined;
     });
     setLoading(false);
@@ -56,9 +67,7 @@ export const useRequest = () => {
           }).catch((error) => { console.log('teste', error); });
 
       })
-      .catch((error) => {
-        console.log('testes', error);
-
+      .catch(() => { setModal({visible:true,title:'Erro',text:'Usuario ou senha invalidos'});
       });
 
     setLoading(false);
@@ -66,6 +75,8 @@ export const useRequest = () => {
   return {
     loading,
     authRequest,
+    setErrorMessage,
+    errorMessage,
     request,
     grafico,
   };

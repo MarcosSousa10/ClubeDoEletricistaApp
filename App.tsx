@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   NavigationContainer,
   ParamListBase,
@@ -15,7 +16,10 @@ import {theme} from './src/shared/themes/theme';
 import Perfil from './src/modules/perfil';
 import Informacao from './src/modules/Informacoes';
 import Administrador from './src/modules/administrador';
-
+import GlobalModal from './src/shared/modal/globalModal/GlobalModal';
+import {Provider} from 'react-redux';
+import store from './src/story';
+import CreateUser from './src/modules/createUser';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
@@ -80,7 +84,9 @@ const TabNavigation = () => {
 };
 const App = () => {
   return (
-    <NavigationContainer>
+    <Provider store={store}>
+      <GlobalModal />
+      <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name={MenuUrl.SPLASH}
@@ -97,8 +103,12 @@ const App = () => {
           component={TabNavigation}
           options={{headerShown: false}}
         />
+        <Stack.Screen name={MenuUrl.CADASTRO} component={CreateUser} options={{ title: 'Criar Usuario' }} />
+
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
+
   );
 };
 

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import Text from '../../../shared/components/text/Text';
 import React, { useEffect, useState } from 'react';
 import { HomeContainerInfo } from '../styles/perfil.style';
@@ -10,27 +10,34 @@ import { useRequest } from '../../../shared/hooks/useRequest';
 import { MethodEnum } from '../../../enums/methods.enum';
 import { InformacaoType } from '../../../types/InformacaoType';
 import moment from 'moment';
-import Overlay from 'react-native-loading-spinner-overlay';
+// import Overlay from 'react-native-loading-spinner-overlay';
 
 const Perfil = () => {
   const [informacao, setInformacao] = useState<InformacaoType>();
   const { request,loading } = useRequest();
-
+  const verifyLogin = async () => {
+    request<InformacaoType>({
+      url: `https://othondecarvalho.com.br:5555/pc/informacao/${await gettCodProf()}`,
+      method: MethodEnum.GET,
+    }).then((Response) => { setInformacao(Response); });
+  };
 
   useEffect(() => {
-    const verifyLogin = async () => {
-      request<InformacaoType>({
-        url: `https://othondecarvalho.com.br:5555/pc/informacao/${await gettCodProf()}`,
-        method: MethodEnum.GET,
-      }).then((Response) => { setInformacao(Response); });
-    };
+   
     verifyLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   return (
-    <View>
-            <Overlay visible={loading} />
+    <ScrollView
+    refreshControl={
+      <RefreshControl
+        refreshing={loading}
+        onRefresh={verifyLogin}
+      />
+    }
+    >
+            {/* <Overlay visible={loading} /> */}
       <HomeContainerInfo>
           <Text color="black">Nome: {informacao?.descricao}</Text>
           <Text color="black">Data de Cadastro: {moment(informacao?.dtcadastro).format("DD/MM/YY")}</Text>
@@ -40,7 +47,7 @@ const Perfil = () => {
         </HomeContainerInfo><View>
             <Button title="SAIR" onPress={() => { logout(navigation); } } />
           </View>
-    </View>
+    </ScrollView>
   );
 };
 export default Perfil;

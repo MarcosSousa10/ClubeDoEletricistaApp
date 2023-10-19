@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {  useEffect, useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View, RefreshControl, ScrollView } from 'react-native';
 import { LineChart, YAxis, Grid, XAxis } from 'react-native-svg-charts';
 import { useRequest } from '../../hooks/useRequest';
 import { MethodEnum } from '../../../enums/methods.enum';
@@ -20,6 +20,9 @@ const Grafico = () => {
     const [monthsData, setMonthsData] = useState([0]);
     const [campanha, setCampanha] = useState<string>();
     const [value, setValue] = useState(true);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
       request<CampanhaType>({
         url: `${URL_CAMPANHA}`,
@@ -40,6 +43,7 @@ fetchImages();
           method: MethodEnum.GET,
         })
       );
+
     return Promise.all(requests).then(responses => {
       
         const updatedMonthsData = [...monthsData];
@@ -55,9 +59,9 @@ fetchImages();
                 }
           }
         });
-    
         setMonthsData(updatedMonthsData);
       });
+
     };
     if (value ){
       if (typeof monthsData[0] === 'number' ){
@@ -65,6 +69,7 @@ fetchImages();
       }
       fetchImages();
     }
+
 
 
     //   const fetchImages =  () => {
@@ -81,10 +86,20 @@ fetchImages();
     //      })
     //    );
     //  };
-
+    const onRefresh = () => {
+      fetchImages();
+    };
 
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+        >
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Text>{campanha}</Text>
             <View style={{ height: 210, width: larguraDaTela - 20, flexDirection: 'row' }}>
                 <LineChart
@@ -103,7 +118,8 @@ fetchImages();
                     numberOfTicks={10}
                 />
             </View>
-        </View>
+            </View>
+        </ScrollView>
     );
 };
 

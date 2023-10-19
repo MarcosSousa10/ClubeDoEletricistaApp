@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */ /* eslint-disable react-hooks/exhaustive-deps */
 import React = require('react');
-import { ScrollView  } from 'react-native';
+import { ScrollView, RefreshControl  } from 'react-native';
 import { BoldNumber, HomeContainer, HomeContainerInfo,WhiteSquare } from '../styles/home.styles';
 import Text from '../../../shared/components/text/Text';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import { Icon } from '../../../shared/icon/Icon';
 import Carrossel from '../../../shared/components/carousel/Carousel';
 import Grafico from '../../../shared/components/grafico/Grafico';
 import { gettCodProf } from '../../../shared/functions/connection/auth';
-import Overlay from 'react-native-loading-spinner-overlay';
+// import Overlay from 'react-native-loading-spinner-overlay';
 // const SLIDER_WIDTH = Dimensions.get('window').width;
 // const ITEM_WIDTH = SLIDER_WIDTH * 0.88;
 const Home = () => {
@@ -24,13 +24,16 @@ const Home = () => {
     const [campanha, setCampanha] = useState<string>();
     const [pontuacao, SetPontuacao] = useState<Pontuacaotype>();
     const verifyLogin = async () => {
+
         request<Pontuacaotype>({
             url: `${URL_PONTUACAO}${await gettCodProf()}`,
             method: MethodEnum.GET,
         }).then((Response) => { return SetPontuacao(Response);
         });
+
     };
     useEffect(()  => {
+
         request<CampanhaType>({
             url: `${URL_CAMPANHA}`,
             method: MethodEnum.GET,
@@ -40,11 +43,22 @@ const Home = () => {
                 setNome(Response?.nome);
                 verifyLogin();
         });
-        
+
     }, [campanha]);
+    
+  const onRefresh = () => {
+    verifyLogin();
+  };
+
     return (
-        <ScrollView >
-       <Overlay visible={loading} />
+        <ScrollView
+        refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={onRefresh}
+            />
+          }>
+       {/* <Overlay visible={loading} /> */}
         <HomeContainerInfo>
                     <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Campanha vigente :{nome}</Text>
                     <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Período da campanha :{campanha}</Text>
