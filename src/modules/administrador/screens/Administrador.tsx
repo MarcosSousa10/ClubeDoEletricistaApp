@@ -7,7 +7,10 @@ import { textTypes } from '../../../shared/components/text/textTypes';
 const Administrador = () => {
    
     return (
-        <View><Text type={textTypes.TITLE_BOLD}>Ainda Não a nada</Text></View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text type={textTypes.TITLE_BOLD}>Ainda Não há nada</Text>
+      </View>
+      
     );
 };
 

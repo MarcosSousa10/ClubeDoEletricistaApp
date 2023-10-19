@@ -109,7 +109,7 @@ fetchImages();
                     contentInset={contentInset}
                 >
                     <Grid />
-                    <XAxis data={monthsData} formatLabel={(value, index) => meses[index]} style={{ margin: 10 }} />
+                    <XAxis  data={monthsData} formatLabel={(value, index) => meses[index]} />
                 </LineChart>
                 <YAxis
                     data={monthsData}
