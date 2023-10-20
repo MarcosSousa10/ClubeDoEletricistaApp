@@ -19,7 +19,7 @@ const Button = ({ title, type, loading, disabled, margin, onPress, ...props }: B
     if (!loading && !disabled && onPress){
       onPress();
     }
-  }
+  };
   const renderText = (color: string | undefined) => {
     return (
       <>
@@ -31,11 +31,11 @@ const Button = ({ title, type, loading, disabled, margin, onPress, ...props }: B
     );
   };
   if (disabled) {
-    return(
+    return (
       <ButtonDisabled  {...props} margin={margin}  >
                   {renderText(theme.colors.neutraTheme.white)}
       </ButtonDisabled>
-    )
+    );
   }
   switch (type) {
     case theme.buttons.buttonsTheme.secondary:

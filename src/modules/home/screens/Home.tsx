@@ -45,7 +45,7 @@ const Home = () => {
         });
 
     }, [campanha]);
-    
+
   const onRefresh = () => {
     verifyLogin();
   };
@@ -60,15 +60,15 @@ const Home = () => {
           }>
        {/* <Overlay visible={loading} /> */}
         <HomeContainerInfo>
-                    <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Campanha vigente :{nome}</Text>
-                    <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}>Período da campanha :{campanha}</Text>
+                    <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SEMI_BOLD}>Campanha vigente :{nome}</Text>
+                    <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SEMI_BOLD}>Período da campanha :{campanha}</Text>
                 </HomeContainerInfo><Carrossel /><HomeContainer>
                         <WhiteSquare>
-                            <Text>Pontuação</Text>
+                            <Text type={textTypes.PARAGRAPH_BOLD}>Pontuação</Text>
                             <BoldNumber>
                             {pontuacao?.pontuacao ? pontuacao?.pontuacao : 0}
                             </BoldNumber>
-                            <Icon name="coin-dollar" size={60} color={theme.colors.neutraTheme.black} />
+                            <Icon name="coin-dollar" size={70} color={theme.colors.neutraTheme.black} />
                         </WhiteSquare>
                     </HomeContainer>
                     <Grafico />

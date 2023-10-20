@@ -33,7 +33,7 @@ const TabNavigation = () => {
         iconName = 'home';
         break;
       case MenuUrl.ADMINISTRADOR:
-        iconName = 'man';
+        iconName = 'cart';
         break;
       case MenuUrl.INFORMACAO:
         iconName = 'info';
@@ -72,7 +72,7 @@ const TabNavigation = () => {
       <Tab.Screen
         name={MenuUrl.ADMINISTRADOR}
         component={Administrador}
-        options={{title: 'Administrador', headerShown: false}}
+        options={{title: 'Vendas', headerShown: false}}
       />
       <Tab.Screen
         name={MenuUrl.PERFIL}
