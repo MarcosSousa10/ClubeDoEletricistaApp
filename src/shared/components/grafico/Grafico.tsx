@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles *//* eslint-disable prettier/prettier *//* eslint-disable @typescript-eslint/no-shadow */
 import React, {  useEffect, useState } from 'react';
 import { Dimensions, View, RefreshControl, ScrollView } from 'react-native';
 import { LineChart, YAxis, Grid, XAxis } from 'react-native-svg-charts';
@@ -7,7 +7,7 @@ import { MethodEnum } from '../../../enums/methods.enum';
 import { GraficoType } from '../../../types/GraficoType';
 import { gettCodCnpj } from '../../functions/connection/auth';
 import { CampanhaType } from '../../../types/CampanhaType';
-import { URL_CAMPANHA } from '../../constants/url';
+import { URL_CAMPANHA, URL_GRAFICO } from '../../constants/url';
 import Text from '../text/Text';
 
 const larguraDaTela = Dimensions.get('window').width;
@@ -20,7 +20,7 @@ const Grafico = () => {
     const [monthsData, setMonthsData] = useState([0]);
     const [campanha, setCampanha] = useState<string>();
     const [value, setValue] = useState(true);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -31,27 +31,28 @@ const Grafico = () => {
     }).then((Response) => {setCampanha(Response?.periodo);
 fetchImages();
     });
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [campanha]);
     const fetchImages = async () => {
+      setRefreshing(true);
       const a = await gettCodCnpj();
       const cnpj = a?.replace(/"/g, '');
         const requests = Array.from({ length: 12 }, async (_, index) =>
         await request<GraficoType>({
-          url: `https://othondecarvalho.com.br:5555/pc/dashboard/${cnpj}/${index + 1}`,
+          url: `${URL_GRAFICO}/${cnpj}/${index + 1}`,
           method: MethodEnum.GET,
         })
       );
 
     return Promise.all(requests).then(responses => {
-      
         const updatedMonthsData = [...monthsData];
          updatedMonthsData.pop();
          updatedMonthsData.splice(0, updatedMonthsData.length);
         responses.forEach((responsess: GraficoType | undefined ) => {
           if (responsess?.codbrinde != null) {
             updatedMonthsData.push(responsess.codbrinde);
+            setRefreshing(false);
+
           } else if (responsess){
 
               for (let i = 0; i < 1; i++) {
@@ -63,9 +64,10 @@ fetchImages();
       });
 
     };
-    if (value ){
+    if (value){
       if (typeof monthsData[0] === 'number' ){
         setValue(false);
+        setRefreshing(false);
       }
       fetchImages();
     }

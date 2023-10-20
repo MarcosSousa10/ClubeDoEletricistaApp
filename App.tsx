@@ -43,7 +43,7 @@ const TabNavigation = () => {
         iconName = 'profile';
         break;
     }
-    return <Icon name={iconName} size={16} color={color} />;
+    return <Icon name={iconName} size={23} color={color} />;
   };
   return (
     <Tab.Navigator
@@ -55,7 +55,7 @@ const TabNavigation = () => {
           marginBottom: 8,
         },
         tabBarStyle: {
-          height: 52,
+          height: 65,
           padding: 8,
         },
       })}>

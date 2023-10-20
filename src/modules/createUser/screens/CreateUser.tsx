@@ -8,6 +8,27 @@ import { TextInput } from 'react-native';
 import React from 'react';
 
 const CreateUser = () => {
+//   await axios.put(`https://othondecarvalho.com.br:5555/pc/teste/${codprofissional}`, {
+//     descricao: descricao,
+//     cnpj: cnpj,
+//     fone: telefone,
+//     email: email,
+//     tipoprof: "PC",
+//     percomprof: "2",
+//     senha: senha,
+//     uf: uf,
+//     dtnasc: dtnasc,
+//     rg_ie: rg_ie,
+//     profissao: valorSelecionado,
+//     bairro: bairro,
+//     celular: celular,
+//     cep: cep,
+//     cidade: cidade,
+//     endereco: endereco,
+//     dtcadastro: dtcadastro
+// }).then(Response => {
+//   await axios.get(`https://othondecarvalho.com.br:5555/pc/Salvar/${senha}/${email}/${uf}/${dtnasc}/${rg_ie}/'0000000000'/${valorSelecionado}/${bairro}/${celular}/${cep}/${cidade}/${descricao}/${endereco}/${cnpj}/${isAgreed}`)
+//   .then(Response => {
     const {createUser,disabled, loading, handleOnChangeInput, handleCreateUser} = useCreateUser();
     const phoneInput = useRef<TextInput>(null);
     const emailInput = useRef<TextInput>(null);

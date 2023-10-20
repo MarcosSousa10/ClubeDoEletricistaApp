@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles *//* eslint-disable prettier/prettier *//* eslint-disable no-lone-blocks *//* eslint-disable no-sequences */
 import React, {  useState } from 'react';
-import { View, TouchableOpacity, Text, TextInput } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, Dimensions, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';  // Importe a função de formatação de data
 import { Icon } from '../../../shared/icon/Icon';
@@ -11,6 +11,7 @@ import { gettCodProf } from '../../../shared/functions/connection/auth';
 import { URL_CONSULTA_VENDAS } from '../../../shared/constants/url';
 import { MethodEnum } from '../../../enums/methods.enum';
 import { ConsultaVendasType } from '../../../types/ConsultaVendasType';
+const larguraDaTela = Dimensions.get('window').width;
 
 const Administrador = () => {
   const [dataEnt, setDataEnt] = useState<Date| undefined>(new Date());
@@ -41,7 +42,8 @@ const Administrador = () => {
     });
     return formatoMoeda.format(valor);
   }  return (
-    <View style={{ alignItems: 'center' }}>
+    <ScrollView>
+      <View style={{ alignItems: 'center' }}>
       <View style={{flexDirection:'row' ,  borderWidth: 1,borderColor: `${theme.colors.mainTheme.primary}`, alignItems:'center',justifyContent: 'center' }}>
         <TouchableOpacity onPress={() => setShowDatePicker(true)} style={{flexDirection: 'row', marginLeft:20, paddingLeft:20,flex:1, alignItems:'center',justifyContent: 'center' }}>
           <Icon name="calendar" size={20} color="black" style={{paddingRight:10}} />
@@ -71,14 +73,13 @@ const Administrador = () => {
         />
       )}
       <Button title="Buscar" type={theme.buttons.buttonsTheme.primary} onPress={verifyLogin}/>
-      <View>
-      <View>
+      <ScrollView>
     {data.map((item:ConsultaVendasType , index: React.Key | null | undefined) => (
       <View key={index}>
         {item.cliente !== '' ? (
           <View key={item.numnota}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' ,borderWidth:1,margin:20, padding:15}}>
-              <View style={{ marginLeft: 10 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' ,borderWidth:1, padding:15,width:larguraDaTela}}>
+              <View>
                 <View  style={{alignItems:'center' }}>
                 <Text style={{ fontWeight: 'bold',color:'blue' }}>{item.cliente}</Text>
 
@@ -110,9 +111,9 @@ const Administrador = () => {
         ) : null}
       </View>
     ))}
+  </ScrollView>
   </View>
-  </View>
-    </View>
+    </ScrollView>
   );
 };
 
