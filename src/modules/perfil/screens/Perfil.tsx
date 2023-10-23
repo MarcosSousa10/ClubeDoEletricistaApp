@@ -48,7 +48,7 @@ const Perfil = () => {
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16}}>cnpj: {informacao?.cnpj}</Text>
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16}}>codigo do profissional: {informacao?.codprofissional}</Text>
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16,marginBottom:30}}>Data Da Ultima Compra: {informacao?.tipoprof ? moment(informacao?.tipoprof).format('DD/MM/YYYY') : 'Não Foi Localizado Data Da Ultima Compra'}</Text>
-          <Button title="Editar Cadastro" type={theme.buttons.buttonsTheme.secondary} style={{marginBottom:2}} onPress={()=> navigation.navigate(MenuUrl.EDITAR)}/>
+          <Button title="Alterar Cadastro" type={theme.buttons.buttonsTheme.secondary} style={{marginBottom:2}} onPress={()=> navigation.navigate(MenuUrl.EDITAR)}/>
 
         </HomeContainerInfo>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

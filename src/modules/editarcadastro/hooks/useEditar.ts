@@ -67,7 +67,7 @@ export const useEditar = () => {
             endereco: info?.endereco,
             dtcadastro: info?.dtcadastro,
         },
-        message: 'Usuario Editado com sucesso!',
+        message: 'Usuario Alterado com sucesso!',
       
     }).then(()=>navigation.navigate(MenuUrl.PERFIL));
          

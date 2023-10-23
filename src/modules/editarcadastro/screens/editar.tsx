@@ -63,7 +63,7 @@ return (
         onPress={handleEditeUser}
         loading={loading}
         margin="0px 0px 0px 0px"
-        title="Editar Cadastro"
+        title="Alterar Informações"
       />
     </CreateUserContainer>
 );
