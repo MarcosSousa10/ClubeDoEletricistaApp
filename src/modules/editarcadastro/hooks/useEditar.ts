@@ -13,8 +13,8 @@ import { gettCodProf } from '../../../shared/functions/connection/auth';
 
 
 export const useEditar = () => {
-  const { reset } = useNavigation<NavigationProp<ParamListBase>>();
-  const {request, loading} = useRequest();
+    const navigation = useNavigation<NavigationProp<ParamListBase>>();
+    const {request, loading} = useRequest();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [info, setInfo] = useState<EditarUserType>();
   const [editeeUser, setEditeUser] = useState<EditarUserType>({
@@ -45,7 +45,7 @@ export const useEditar = () => {
 }, []);
   const handleEditeUser = async () => {
     console.log(`${URL_EDITAR_CADASTRO}/${await gettCodProf()} ${info?.descricao}`);
-    const resultCreateUser = await request({
+   await request({
         url: `${URL_EDITAR_CADASTRO}/${await gettCodProf()}`,
         method: MethodEnum.PUT,
         body:{
@@ -68,13 +68,9 @@ export const useEditar = () => {
             dtcadastro: info?.dtcadastro,
         },
         message: 'Usuario Editado com sucesso!',
-    });
-    if (resultCreateUser){
-        reset({
-            index:0,
-            routes: [{name: MenuUrl.HOME}],
-        });
-    }
+      
+    }).then(()=>navigation.navigate(MenuUrl.PERFIL));
+         
   };
 
   const handleEditeInfo = async () => {
