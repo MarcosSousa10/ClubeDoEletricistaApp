@@ -65,6 +65,11 @@ const Home = () => {
             }
         });
 
+    };  
+     const onRefresh = () => {
+        verifyLogin();
+        fetchImages();
+
     };
     const verifyLogin = async () => {
         setCarregar(true);
@@ -90,13 +95,9 @@ const Home = () => {
         });
         verifyLogin();
         fetchImages();
-    }, [campanha,Carrossel]);
+    }, [campanha,Carrossel,nome,larguraDaTela]);
 
-    const onRefresh = () => {
-        verifyLogin();
-        fetchImages();
-
-    };
+ 
 
     return (
         <ScrollView
