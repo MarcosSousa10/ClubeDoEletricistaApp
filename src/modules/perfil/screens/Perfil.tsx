@@ -12,9 +12,11 @@ import { InformacaoType } from '../../../types/InformacaoType';
 import moment from 'moment';
 import { textTypes } from '../../../shared/components/text/textTypes';
 import { theme } from '../../../shared/themes/theme';
+import { MenuUrl } from '../../../shared/components/enums/MenuUrl.enum';
 // import Overlay from 'react-native-loading-spinner-overlay';
 
 const Perfil = () => {
+
   const [informacao, setInformacao] = useState<InformacaoType>();
   const { request,loading } = useRequest();
   const verifyLogin = async () => {
@@ -46,7 +48,8 @@ const Perfil = () => {
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16}}>cnpj: {informacao?.cnpj}</Text>
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16}}>codigo do profissional: {informacao?.codprofissional}</Text>
           <Text color="black" type={textTypes.PARAGRAPH_REGULAR} style={{fontSize:16,marginBottom:30}}>Data Da Ultima Compra: {informacao?.tipoprof ? moment(informacao?.tipoprof).format('DD/MM/YYYY') : 'Não Foi Localizado Data Da Ultima Compra'}</Text>
-          <Button title="Editar Cadastro" type={theme.buttons.buttonsTheme.secondary} style={{marginBottom:2}}/>
+          <Button title="Editar Cadastro" type={theme.buttons.buttonsTheme.secondary} style={{marginBottom:2}} onPress={()=> navigation.navigate(MenuUrl.EDITAR)}/>
+
         </HomeContainerInfo>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Image resizeMode="contain" style={{width: 200 , height: 100 , marginBottom: 24}} source={require('./image/pretoLuminato.png')} />

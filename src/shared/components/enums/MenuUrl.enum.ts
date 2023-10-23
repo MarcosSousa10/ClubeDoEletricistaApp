@@ -6,5 +6,6 @@ export enum MenuUrl {
   PERFIL = 'Perfil',
   INFORMACAO = 'Informacao',
   CADASTRO = 'Cadastro',
-  ADMINISTRADOR = 'ORDER'
+  ADMINISTRADOR = 'ORDER',
+  EDITAR = 'Editar'
 }

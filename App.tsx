@@ -20,6 +20,7 @@ import GlobalModal from './src/shared/modal/globalModal/GlobalModal';
 import {Provider} from 'react-redux';
 import store from './src/story';
 import CreateUser from './src/modules/createUser';
+import Editar from './src/modules/editarcadastro/screens/editar';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
@@ -104,6 +105,7 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen name={MenuUrl.CADASTRO} component={CreateUser} options={{ title: 'Criar Usuario' }} />
+        <Stack.Screen name={MenuUrl.EDITAR} component={Editar} options={{ title: 'Editar' }} />
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -7,7 +7,6 @@ import { URL_CARROCEL } from '../../constants/url';
 import { MethodEnum } from '../../../enums/methods.enum';
 
 const larguraDaTela = Dimensions.get('window').width;
-console.log(larguraDaTela);
 const Carrossel = () => {
   const { request } = useRequest();
   const [images, setImages] = useState([]);
@@ -23,7 +22,7 @@ const Carrossel = () => {
         if (response.length > 0) {
           setImages(response);
         }
-      });
+      }).catch((error)=>{console.log("dsadadadsadsadadadaddadasdasdasdasdasdadadadadaa"+error)});
     };
     fetchImages();
   // eslint-disable-next-line react-hooks/exhaustive-deps

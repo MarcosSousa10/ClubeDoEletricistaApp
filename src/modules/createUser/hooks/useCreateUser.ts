@@ -5,7 +5,6 @@ import { NativeSyntheticEvent,  TextInputChangeEventData } from 'react-native';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import { MethodEnum } from '../../../enums/methods.enum';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import { validateCpf } from '../../../shared/functions/cpf';
 import { validatePhone } from '../../../shared/functions/phone';
 import { validateEmail } from '../../../shared/functions/email';
 import { removeSpacialCharacters } from '../../../shared/functions/caracteres';
@@ -17,6 +16,7 @@ export const useCreateUser = () => {
   const { reset } = useNavigation<NavigationProp<ParamListBase>>();
   const {request, loading} = useRequest();
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [valorSelecionado, setValorSelecionado] = useState('');
   const [createUser, setCreateUser] = useState<CreateUserType>({
     confirmPassword: '',
     cpf: '',
@@ -24,13 +24,28 @@ export const useCreateUser = () => {
     name:'' ,
     password:'',
     phone: '',
+    uf: '',
+    endereco: '',
+    cidade: '',
+    rg: '',
+    cep: '',
+    datanasc: '',
+    bairro: '',
+    valorSelecionado: '',
   });
   useEffect(()=>{
     if (
-        createUser.name !== '' &&
-        createUser.password === createUser.confirmPassword &&
+      createUser.name !== '' &&
+      createUser.bairro !== '' &&
+      createUser.cep !== '' &&
+      createUser.cidade !== '' &&
+      createUser.datanasc !== '' &&
+      createUser.endereco !== '' &&
+      createUser.rg !== '' &&
+      createUser.uf !== '' &&
+      valorSelecionado !== '' &&
+      createUser.password === createUser.confirmPassword &&
         createUser.cpf !== '' &&
-        validateCpf( createUser.cpf ) &&
         validatePhone(createUser.phone) &&
         validateEmail(createUser.email) &&
         createUser.email !== '' &&
@@ -41,11 +56,12 @@ export const useCreateUser = () => {
     } else {
         setDisabled(true);
     }
-  },[createUser]);
+  },[createUser, valorSelecionado]);
   const handleCreateUser = async () => {
+    console.log(`${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${createUser.datanasc}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${createUser.phone}/${createUser.cep}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`);
     const resultCreateUser = await request({
-        url: URL_CADASTRO,
-        method: MethodEnum.POST,
+        url: `${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${createUser.datanasc}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${createUser.phone}/${createUser.cep}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`,
+        method: MethodEnum.GET,
         body:{
             ...createUser,
             phone: removeSpacialCharacters(createUser.phone),
@@ -63,7 +79,7 @@ export const useCreateUser = () => {
   const handleOnChangeInput = ( event: NativeSyntheticEvent<TextInputChangeEventData>, name: string)=>{
     setCreateUser((currentCreateUser) =>({
       ...currentCreateUser,
-      [name]: event.nativeEvent.text,
+      [name]: event.nativeEvent?.text,
 }));
   };
   return {
@@ -71,6 +87,7 @@ export const useCreateUser = () => {
     loading,
     disabled,
     handleOnChangeInput,
+    setValorSelecionado,
     handleCreateUser,
   };
 };

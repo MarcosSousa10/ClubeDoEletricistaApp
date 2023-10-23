@@ -60,7 +60,6 @@ const Home = () => {
                 }
             });
             setMonthsData(updatedMonthsData);
-            console.log(updatedMonthsData.length);
             if (monthsData[updatedMonthsData.length] !== null) {
                 setInterval(()=>setCarregar(false),4000);
             }
