@@ -60,12 +60,12 @@ export const useCreateUser = () => {
   const handleCreateUser = async () => {
     console.log(`${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${createUser.datanasc}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${createUser.phone}/${createUser.cep}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`);
     const resultCreateUser = await request({
-        url: `${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${createUser.datanasc}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${createUser.phone}/${createUser.cep}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`,
+        url: `${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${removeSpacialCharacters(createUser.datanasc)}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${removeSpacialCharacters(createUser.phone)}/${removeSpacialCharacters(createUser.cep)}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`,
         method: MethodEnum.GET,
         body:{
             ...createUser,
             phone: removeSpacialCharacters(createUser.phone),
-            cpf: removeSpacialCharacters(createUser.cpf),
+            datanasc: removeSpacialCharacters(createUser.datanasc),
         },
         message: 'Usuario cadastrado com sucesso!',
     });

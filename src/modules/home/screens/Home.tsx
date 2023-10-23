@@ -66,7 +66,6 @@ const Home = () => {
         });
 
     };
-    
     const verifyLogin = async () => {
         setCarregar(true);
         request<Pontuacaotype>({
@@ -91,7 +90,7 @@ const Home = () => {
         });
         verifyLogin();
         fetchImages();
-    }, [campanha]);
+    }, [campanha,Carrossel]);
 
     const onRefresh = () => {
         verifyLogin();

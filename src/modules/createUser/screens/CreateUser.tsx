@@ -3,10 +3,13 @@ import { useRef } from 'react';
 import Button from '../../../shared/components/button/Button';
 import { useCreateUser } from '../hooks/useCreateUser';
 import { CreateUserContainer } from '../styles/createUser.style';
-import { TextInput, View } from 'react-native';
+import { TextInput } from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import Input from '../../../shared/components/input/input';
+import Text from '../../../shared/components/text/Text';
+import { theme } from '../../../shared/themes/theme';
+import { textTypes } from '../../../shared/components/text/textTypes';
 
 const CreateUser = () => {
   //   await axios.put(`https://othondecarvalho.com.br:5555/pc/teste/${codprofissional}`, {
@@ -59,6 +62,7 @@ const CreateUser = () => {
         margin="0px 0px 16px 0px"
         placeholder="Digite"
         type="cel-phone"
+        maxLength={15}
         title="Telefone :"
         ref={phoneInput}
         onSubmitEditing={() => emailInput.current?.focus()}
@@ -81,7 +85,6 @@ const CreateUser = () => {
         onChange={(event) => handleOnChangeInput(event, 'cpf')}
         margin="0px 0px 16px 0px"
         placeholder="Digite"
-        type="cpf"
         title="CPF Ou CNPJ:"
         ref={cpfInput}
         onSubmitEditing={() => rgInput.current?.focus()}
@@ -115,6 +118,7 @@ const CreateUser = () => {
         value={createUser.uf}
         onChange={(event) => handleOnChangeInput(event, 'uf')}
         margin="0px 0px 16px 0px"
+        maxLength={2}
         placeholder="Digite"
         ref={ufInput}
         title="UF :"
@@ -125,6 +129,8 @@ const CreateUser = () => {
         onChange={(event) => handleOnChangeInput(event, 'datanasc')}
         margin="0px 0px 16px 0px"
         placeholder="Digite"
+        type="datanasc"
+        maxLength={10}
         ref={dateNascInput}
         title="Data de nascimento :"
         onSubmitEditing={() => enderecoInput.current?.focus()}
@@ -161,6 +167,8 @@ const CreateUser = () => {
         onChange={(event) => handleOnChangeInput(event, 'cep')}
         margin="0px 0px 16px 0px"
         placeholder="Digite"
+        type='cep'
+        maxLength={9}
         ref={cepInput}
         title="CEP :"
         onSubmitEditing={() => passwordInput.current?.focus()}
@@ -189,9 +197,10 @@ const CreateUser = () => {
         disabled={disabled}
         onPress={handleCreateUser}
         loading={loading}
-        margin="0px 0px 32px 0px"
+        margin="0px 0px 0px 0px"
         title="Criar usúario"
       />
+      <Text color={theme.colors.orangeTheme.orange80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD} margin='0px 0px 40px 0px' style={{textAlign:'center'}}>O botão só será ativado quando todos os campos estiverem preenchidos de maneira correta.</Text>
     </CreateUserContainer>
   );
 };
