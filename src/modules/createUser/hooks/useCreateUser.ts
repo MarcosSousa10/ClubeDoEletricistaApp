@@ -86,8 +86,6 @@ export const useCreateUser = () => {
     } else {
 Alert.alert('Usuario Já Existe no Banco de Dados!');
 }
-
-      
     });
 
   };
