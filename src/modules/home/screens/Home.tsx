@@ -10,7 +10,7 @@ import { textTypes } from '../../../shared/components/text/textTypes';
 import { Icon } from '../../../shared/icon/Icon';
 import Carrossel from '../../../shared/components/carousel/Carousel';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, View, RefreshControl, ScrollView } from 'react-native';
+import { Dimensions, View, RefreshControl, ScrollView, RefreshControlBase } from 'react-native';
 import { LineChart, YAxis, Grid, XAxis } from 'react-native-svg-charts';
 import { GraficoType } from '../../../types/GraficoType';
 import { gettCodCnpj } from '../../../shared/functions/connection/auth';
@@ -43,6 +43,7 @@ const Home = () => {
                 method: MethodEnum.GET,
             })
         );
+        RefreshControlBase;
 
         return Promise.all(requests).then(responses => {
             const updatedMonthsData = [...monthsData];
@@ -61,15 +62,13 @@ const Home = () => {
             });
             setMonthsData(updatedMonthsData);
             if (monthsData[updatedMonthsData.length] !== null) {
-                setInterval(()=>setCarregar(false),4000);
+                setCarregar(false);
             }
         });
-
-    };  
+    };
      const onRefresh = () => {
         verifyLogin();
         fetchImages();
-
     };
     const verifyLogin = async () => {
         setCarregar(true);
@@ -79,10 +78,8 @@ const Home = () => {
         }).then((Response) => {
             SetPontuacao(Response);
         });
-
     };
     useEffect(() => {
-
         request<CampanhaType>({
             url: `${URL_CAMPANHA}`,
             method: MethodEnum.GET,
@@ -97,16 +94,18 @@ const Home = () => {
         fetchImages();
     }, [campanha,Carrossel,nome,larguraDaTela]);
 
- 
+
 
     return (
         <ScrollView
             refreshControl={
                 <RefreshControl
+
                     refreshing={loading || carregar}
                     onRefresh={onRefresh}
                 />
             }>
+
             {/* <Overlay visible={loading} /> */}
             <HomeContainerInfo>
                 <Text color={theme.colors.pupleTheme.purple80} type={textTypes.PARAGRAPH_SEMI_BOLD}>Campanha vigente :{nome}</Text>
@@ -143,7 +142,7 @@ const Home = () => {
                     refreshing={loading && carregar}
                     onRefresh={onRefresh}
                 /> }
-                   
+
                 </View>
         </View>
         </ScrollView>

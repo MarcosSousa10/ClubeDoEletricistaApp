@@ -13,7 +13,7 @@ export const ContainerInput = styled.TextInput<ContainerInputProps>`
   background-color: ${theme.colors.neutraTheme.white};
   color: ${theme.colors.neutraTheme.black};
   border-radius: 4px;
-  padding-right: ${(props: { hasSecureTextEntry: any; }) => props.hasSecureTextEntry ? '52px' : '16px'};
+  padding-right: ${(props: { hasSecureTextEntry: any; }) => props.hasSecureTextEntry ? '52px' : '26px'};
   border-width: 1px;
   border-color: ${(props: { isError: any; }) => props.isError ? theme.colors.orangeTheme.orange80 : theme.colors.grayTheme.gray80};
 `;

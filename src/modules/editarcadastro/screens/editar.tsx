@@ -31,14 +31,14 @@ return (
         placeholder={info?.fone}
         type="cel-phone"
         maxLength={15}
-        title="Telefone :"
+        title="Telefone ou Celular :"
         ref={phoneInput}
         onSubmitEditing={() => emailInput.current?.focus()}
         keyboardType="number-pad"
 
       />
       <Input
-        value={editeeUser.email}
+        value={editeeUser.email.toUpperCase()}
         onChange={(event) => handleOnChangeInput(event, 'email')}
         margin="0px 0px 16px 0px"
         placeholder={info?.email}

@@ -77,10 +77,20 @@ export const useCreateUser = () => {
     }
   };
   const handleOnChangeInput = ( event: NativeSyntheticEvent<TextInputChangeEventData>, name: string)=>{
-    setCreateUser((currentCreateUser) =>({
+    if (name === 'email'){
+      setCreateUser((currentCreateUser) =>({
+
+        ...currentCreateUser,
+        [name]: event.nativeEvent?.text.toUpperCase(),
+  }));
+      } else {
+        setCreateUser((currentCreateUser) =>({
+
       ...currentCreateUser,
       [name]: event.nativeEvent?.text,
 }));
+      }
+
   };
   return {
     createUser,

@@ -44,17 +44,41 @@ export const useEditar = () => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
   const handleEditeUser = async () => {
+    var telefone;
+    if (editeeUser.fone){
+         telefone = removeSpacialCharacters(editeeUser?.fone);
+    } else {
+         telefone = info?.fone;
+    }
+    var email;
+    if (editeeUser.email){
+         email = editeeUser?.email;
+    } else {
+         email = info?.email;
+    }
+    var senha;
+    if (editeeUser.senha){
+         senha = editeeUser?.senha;
+    } else {
+         senha = info?.senha;
+    }
+    var nome;
+    if (editeeUser.descricao){
+         nome = editeeUser?.descricao;
+    } else {
+         nome = info?.descricao;
+    }
     console.log(`${URL_EDITAR_CADASTRO}/${await gettCodProf()} ${info?.descricao}`);
    await request({
         url: `${URL_EDITAR_CADASTRO}/${await gettCodProf()}`,
         method: MethodEnum.PUT,
         body:{
-            descricao: info?.descricao,
-            senha:info?.senha,
+            descricao: nome,
+            senha:senha,
             cnpj:info?.cnpj,
-            email:info?.email,
-            celular:removeSpacialCharacters(editeeUser?.fone),
-            fone: removeSpacialCharacters(editeeUser?.fone),
+            email:email,
+            celular:telefone,
+            fone: telefone,
             tipoprof: 'PC',
             percomprof: '2',
             uf: info?.uf,
@@ -68,9 +92,8 @@ export const useEditar = () => {
             dtcadastro: info?.dtcadastro,
         },
         message: 'Usuario Alterado com sucesso!',
-      
+
     }).then(()=>navigation.navigate(MenuUrl.PERFIL));
-         
   };
 
   const handleEditeInfo = async () => {
@@ -80,10 +103,17 @@ export const useEditar = () => {
     }).then(Response=>setInfo(Response));
   };
   const handleOnChangeInput = ( event: NativeSyntheticEvent<TextInputChangeEventData>, name: string)=>{
-    setEditeUser((currentEditeUser) =>({
-      ...currentEditeUser,
-      [name]: event.nativeEvent?.text,
-}));
+    if (name === 'email'){
+        setEditeUser((currentEditeUser) =>({
+         ...currentEditeUser,
+          [name]: event.nativeEvent?.text.toUpperCase(),
+    }));
+        } else {
+            setEditeUser((currentEditeUser) =>({
+        ...currentEditeUser,
+        [name]: event.nativeEvent?.text,
+  }));
+        }
   };
   return {
     editeeUser,

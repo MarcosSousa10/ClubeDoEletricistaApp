@@ -3,13 +3,14 @@ import { useRef } from 'react';
 import Button from '../../../shared/components/button/Button';
 import { useCreateUser } from '../hooks/useCreateUser';
 import { CreateUserContainer } from '../styles/createUser.style';
-import { TextInput } from 'react-native';
+import { TextInput, View } from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import Input from '../../../shared/components/input/input';
 import Text from '../../../shared/components/text/Text';
 import { theme } from '../../../shared/themes/theme';
 import { textTypes } from '../../../shared/components/text/textTypes';
+import { Icon } from '../../../shared/icon/Icon';
 
 const CreateUser = () => {
   //   await axios.put(`https://othondecarvalho.com.br:5555/pc/teste/${codprofissional}`, {
@@ -70,7 +71,7 @@ const CreateUser = () => {
 
       />
       <Input
-        value={createUser.email}
+        value={createUser.email.toUpperCase()}
         onChange={(event) => handleOnChangeInput(event, 'email')}
         margin="0px 0px 16px 0px"
         placeholder="Digite"
@@ -91,20 +92,6 @@ const CreateUser = () => {
         keyboardType="number-pad"
       />
 
-      <SelectDropdown
-      buttonStyle={{width:'100%',borderColor:'black',borderWidth:1}}
-         defaultButtonText="selecione uma Profissão"
-        data={countries}
-        onSelect={(selectedItem) => {
-          setValorSelecionado(selectedItem);
-        }}
-        buttonTextAfterSelection={(selectedItem) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item) => {
-          return item;
-        }}
-      />
       <Input
         value={createUser.rg}
         onChange={(event) => handleOnChangeInput(event, 'rg')}
@@ -193,6 +180,24 @@ const CreateUser = () => {
         ref={confirmePasswordInput}
         onSubmitEditing={handleCreateUser}
       />
+      <View style={{alignItems:'center', marginBottom:20}}>
+        <SelectDropdown
+      buttonStyle={{width:'70%',borderColor:'black',borderWidth:1, height:20, alignItems: 'center'}}
+         defaultButtonText="selecione uma Profissão "
+         buttonTextStyle={{fontSize:12}}
+        data={countries}
+        onSelect={(selectedItem) => {
+          setValorSelecionado(selectedItem);
+        }}
+        buttonTextAfterSelection={(selectedItem) => {
+          return selectedItem;
+        }}
+        rowTextForSelection={(item) => {
+          return item;
+        }}
+      />
+      <Icon name='arrow-down'  style={{position:'absolute',right: 56,top: 4}}/>
+      </View>
       <Button
         disabled={disabled}
         onPress={handleCreateUser}
