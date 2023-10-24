@@ -32,7 +32,7 @@ const CreateUser = () => {
   //     endereco: endereco,
   //     dtcadastro: dtcadastro
   // }).then(Response => {
-  const { createUser, disabled, loading, handleOnChangeInput, handleCreateUser,setValorSelecionado } = useCreateUser();
+  const { createUser, disabled, loading, handleOnChangeInput, setValorSelecionado,handleValidarUser } = useCreateUser();
   const phoneInput = useRef<TextInput>(null);
   const emailInput = useRef<TextInput>(null);
   const dateNascInput = useRef<TextInput>(null);
@@ -178,7 +178,6 @@ const CreateUser = () => {
         title="Confirme senha :"
         secureTextEntry
         ref={confirmePasswordInput}
-        onSubmitEditing={handleCreateUser}
       />
       <View style={{alignItems:'center', marginBottom:20}}>
         <SelectDropdown
@@ -200,7 +199,7 @@ const CreateUser = () => {
       </View>
       <Button
         disabled={disabled}
-        onPress={handleCreateUser}
+        onPress={handleValidarUser}
         loading={loading}
         margin="0px 0px 0px 0px"
         title="Criar usúario"

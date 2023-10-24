@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 import {useEffect, useState} from 'react';
 import { CreateUserType } from '../../../types/createUserType';
-import { NativeSyntheticEvent,  TextInputChangeEventData } from 'react-native';
+import { Alert, NativeSyntheticEvent,  TextInputChangeEventData } from 'react-native';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import { MethodEnum } from '../../../enums/methods.enum';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { validatePhone } from '../../../shared/functions/phone';
 import { validateEmail } from '../../../shared/functions/email';
 import { removeSpacialCharacters } from '../../../shared/functions/caracteres';
-import { URL_CADASTRO } from '../../../shared/constants/url';
+import { URL_CADASTRO, URL_VALIDA_CADASTRO } from '../../../shared/constants/url';
 import { MenuUrl } from '../../../shared/components/enums/MenuUrl.enum';
 
 
@@ -58,7 +58,6 @@ export const useCreateUser = () => {
     }
   },[createUser, valorSelecionado]);
   const handleCreateUser = async () => {
-    console.log(`${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${createUser.datanasc}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${createUser.phone}/${createUser.cep}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`);
     const resultCreateUser = await request({
         url: `${URL_CADASTRO}/${createUser.password}/${createUser.email}/${createUser.uf}/${removeSpacialCharacters(createUser.datanasc)}/${createUser.rg}/'0000000000'/${valorSelecionado}/${createUser.bairro}/${removeSpacialCharacters(createUser.phone)}/${removeSpacialCharacters(createUser.cep)}/${createUser.cidade}/${createUser.name}/${createUser.endereco}/${createUser.cpf}/1`,
         method: MethodEnum.GET,
@@ -75,6 +74,22 @@ export const useCreateUser = () => {
             routes: [{name: MenuUrl.LOGIN}],
         });
     }
+  };
+  const handleValidarUser = async () => {
+     await request({
+        url: `${URL_VALIDA_CADASTRO}/${createUser.cpf}`,
+        method: MethodEnum.GET,
+    }).then((Response)=>{
+      if (Response !== 'Achei') {
+        handleCreateUser();
+
+    } else {
+Alert.alert('Usuario Já Existe no Banco de Dados!');
+}
+
+      
+    });
+
   };
   const handleOnChangeInput = ( event: NativeSyntheticEvent<TextInputChangeEventData>, name: string)=>{
     if (name === 'email'){
@@ -98,6 +113,6 @@ export const useCreateUser = () => {
     disabled,
     handleOnChangeInput,
     setValorSelecionado,
-    handleCreateUser,
+    handleValidarUser,
   };
 };

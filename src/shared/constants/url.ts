@@ -7,3 +7,4 @@
  export const URL_CADASTRO = 'https://othondecarvalho.com.br:5555/pc/Salvar';
  export const URL_CONSULTA_VENDAS = 'https://othondecarvalho.com.br:5555/pc/vendas';
  export const URL_EDITAR_CADASTRO = 'https://othondecarvalho.com.br:5555/pc/teste';
+ export const URL_VALIDA_CADASTRO = 'https://othondecarvalho.com.br:5555/pc/validar';
