@@ -80,6 +80,10 @@ const Home = () => {
         });
     };
     useEffect(() => {
+        verifyLogin();
+        fetchImages();
+    }, []);
+    useEffect(() => {
         request<CampanhaType>({
             url: `${URL_CAMPANHA}`,
             method: MethodEnum.GET,
@@ -100,7 +104,6 @@ const Home = () => {
         <ScrollView
             refreshControl={
                 <RefreshControl
-
                     refreshing={loading || carregar}
                     onRefresh={onRefresh}
                 />
@@ -119,10 +122,11 @@ const Home = () => {
                     <Icon name="coin-dollar" size={70} color={theme.colors.neutraTheme.black} />
                 </WhiteSquare>
             </HomeContainer>
+
             <View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Text>{campanha}</Text>
-                    {monthsData ? <View style={{ height: 210, width: larguraDaTela - 20, flexDirection: 'row' }}>
+                    {monthsData && <View style={{ height: 210, width: larguraDaTela - 20, flexDirection: 'row' }}>
                         <LineChart
                             style={{ flex: 1 }}
                             data={monthsData}
@@ -138,10 +142,7 @@ const Home = () => {
                             svg={{ fill: 'grey', fontSize: 10 }}
                             numberOfTicks={10}
                         />
-                    </View> :  <RefreshControl
-                    refreshing={loading && carregar}
-                    onRefresh={onRefresh}
-                /> }
+                    </View> }
 
                 </View>
         </View>
