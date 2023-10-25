@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import styled from 'styled-components/native';
 import { theme } from '../../../shared/themes/theme';
+import { Dimensions } from 'react-native';
+import { LineChart } from 'react-native-svg-charts';
 
 export const HomeContainer = styled.View`
 padding: 8px;
@@ -33,4 +35,18 @@ export const BoldNumber = styled.TextInput.attrs({ readOnly: true })`
   color: black;
   font-weight: bold;
   font-size: 80px;
+`;
+export const HomeView = styled.View`
+justify-content: center;
+align-items: center;
+`;
+
+
+export const HomeViewMonthData = styled.View`
+height: 210px;
+width: ${Dimensions.get('window').width} - 20px;
+flex-direction: row;
+`;
+export const HomeLineChart = styled(LineChart)`
+flex: 1;
 `;

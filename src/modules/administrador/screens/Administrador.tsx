@@ -1,118 +1,175 @@
-/* eslint-disable react-native/no-inline-styles *//* eslint-disable prettier/prettier *//* eslint-disable no-lone-blocks *//* eslint-disable no-sequences */
-import React, {  useState } from 'react';
-import { View, TouchableOpacity, Text, TextInput, Dimensions, ScrollView } from 'react-native';
+/* eslint-disable prettier/prettier */
+import React, {useState} from 'react';
+import {
+  View,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { format } from 'date-fns';  // Importe a função de formatação de data
-import { Icon } from '../../../shared/icon/Icon';
+import {format} from 'date-fns'; // Importe a função de formatação de data
 import Button from '../../../shared/components/button/Button';
-import { theme } from '../../../shared/themes/theme';
-import { useRequest } from '../../../shared/hooks/useRequest';
-import { gettCodProf } from '../../../shared/functions/connection/auth';
-import { URL_CONSULTA_VENDAS } from '../../../shared/constants/url';
-import { MethodEnum } from '../../../enums/methods.enum';
-import { ConsultaVendasType } from '../../../types/ConsultaVendasType';
-const larguraDaTela = Dimensions.get('window').width;
+import {theme} from '../../../shared/themes/theme';
+import {useRequest} from '../../../shared/hooks/useRequest';
+import {gettCodProf} from '../../../shared/functions/connection/auth';
+import {URL_CONSULTA_VENDAS} from '../../../shared/constants/url';
+import {MethodEnum} from '../../../enums/methods.enum';
+import {ConsultaVendasType} from '../../../types/ConsultaVendasType';
+import { TextBold, TextBoldBlue, TextMarginColor, VendasIcon, VendasText, VendasTouchableOpacity, VendasViewAling, VendasViewCenter, VendasViewRow, VendasViewp } from '../styles/administrador.styles';
 
 const Administrador = () => {
-  const [dataEnt, setDataEnt] = useState<Date| undefined>(new Date());
-  const [dataSaida,setDataSaida ] = useState<Date| undefined>(new Date());
+  const [dataEnt, setDataEnt] = useState<Date | undefined>(new Date());
+  const [dataSaida, setDataSaida] = useState<Date | undefined>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showDatePicker1, setShowDatePicker1] = useState(false);
   const [data, setData] = useState<ConsultaVendasType[]>([]);
 
-  const { request } = useRequest();
+  const {request} = useRequest();
 
   const verifyLogin = async () => {
-    {dataEnt && dataSaida &&
-    request<ConsultaVendasType[]>({
-        url: `${URL_CONSULTA_VENDAS}/${await gettCodProf()}/${formatData(dataEnt)}/${formatData(dataSaida)}`,
-        method: MethodEnum.GET,
-    }).then(Response=>{if (Response) {setData(Response);}});
-  }
-
-};
+      dataEnt &&
+        dataSaida &&
+        request<ConsultaVendasType[]>({
+          url: `${URL_CONSULTA_VENDAS}/${await gettCodProf()}/${formatData(
+            dataEnt,
+          )}/${formatData(dataSaida)}`,
+          method: MethodEnum.GET,
+        }).then(Response => {
+          if (Response) {
+            setData(Response);
+          }
+        });
+  };
   // Função para formatar a data no formato 'dd/MM/yyyy'
   const formatData = (date: number | Date) => {
     return format(date, 'dd-MM-yyyy');
   };
-  function formatarMoeda(valor:  number | bigint) {
+  function formatarMoeda(valor: number | bigint) {
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     });
     return formatoMoeda.format(valor);
-  }  return (
+  }
+  return (
     <ScrollView>
-      <View style={{ alignItems: 'center' }}>
-      <View style={{flexDirection:'row' ,  borderWidth: 1,borderColor: `${theme.colors.mainTheme.primary}`, alignItems:'center',justifyContent: 'center' }}>
-        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={{flexDirection: 'row', marginLeft:20, paddingLeft:20,flex:1, alignItems:'center',justifyContent: 'center' }}>
-          <Icon name="calendar" size={20} color="black" style={{paddingRight:10}} />
-          {dataEnt && <TextInput value={formatData(dataEnt)} />}
-        </TouchableOpacity>
-        <Text style={{flexDirection: 'column', paddingLeft:20}}>Até</Text>
-        <TouchableOpacity onPress={() => setShowDatePicker1(true)} style={{flexDirection: 'row', marginLeft:20, paddingLeft:20,flex:1, alignItems:'center',justifyContent: 'center'  }} >
-          <Icon name="calendar" size={20} color="black" style={{paddingRight:10}}/>
-          {dataSaida && <TextInput value={formatData(dataSaida)} />}
-        </TouchableOpacity>
-      </View>
-      {showDatePicker && dataEnt && (
-        <DateTimePicker
-          value={dataEnt}
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => (setDataEnt(selectedDate),
-              setShowDatePicker(false),  setShowDatePicker1(false))}
+      <VendasViewAling>
+        <VendasViewRow>
+          <VendasTouchableOpacity
+            onPress={() => setShowDatePicker(true)}
+            >
+            <VendasIcon
+              name="calendar"
+              size={20}
+              color="black"
+            />
+            {dataEnt && <TextInput value={formatData(dataEnt)} />}
+          </VendasTouchableOpacity>
+          <VendasText>Até</VendasText>
+          <VendasTouchableOpacity
+            onPress={() => setShowDatePicker1(true)}
+          >
+            <VendasIcon
+              name="calendar"
+              size={20}
+              color="black"
+            />
+            {dataSaida && <TextInput value={formatData(dataSaida)} />}
+          </VendasTouchableOpacity>
+        </VendasViewRow>
+        {showDatePicker && dataEnt && (
+          <DateTimePicker
+            value={dataEnt}
+            mode="date"
+            display="default"
+            onChange={(event, selectedDate) => (
+              // eslint-disable-next-line no-sequences
+              setDataEnt(selectedDate),
+              setShowDatePicker(false),
+              setShowDatePicker1(false)
+            )}
+          />
+        )}
+        {showDatePicker1 && dataSaida && (
+          <DateTimePicker
+            value={dataSaida}
+            mode="date"
+            display="default"
+            onChange={(event, selectedDate) => (
+              // eslint-disable-next-line no-sequences
+              setDataSaida(selectedDate),
+              setShowDatePicker1(false),
+              setShowDatePicker(false)
+            )}
+          />
+        )}
+        <Button
+          title="Buscar"
+          type={theme.buttons.buttonsTheme.primary}
+          onPress={verifyLogin}
         />
-      )}
-      {showDatePicker1 && dataSaida && (
-        <DateTimePicker
-          value={dataSaida}
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => (setDataSaida(selectedDate),  setShowDatePicker1(false),setShowDatePicker(false))}
-        />
-      )}
-      <Button title="Buscar" type={theme.buttons.buttonsTheme.primary} onPress={verifyLogin}/>
-      <ScrollView>
-    {data.map((item:ConsultaVendasType , index: React.Key | null | undefined) => (
-      <View key={index}>
-        {item.cliente !== '' ? (
-          <View key={item.numnota}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' ,borderWidth:1, padding:15,width:larguraDaTela}}>
-              <View>
-                <View  style={{alignItems:'center' }}>
-                <Text style={{ fontWeight: 'bold',color:'blue' }}>{item.cliente}</Text>
-
-                </View>
-
-                <View style={{ flexDirection: 'row',padding:2 }}>
-                  <Text style={{ fontWeight: 'bold' }}>Numero Da Nota :</Text>
-                  <Text style={{ marginLeft: 10, color: 'purple' }}>{item.numnota}</Text>
-                </View>
-                <View style={{ flexDirection: 'row',padding:2 }}>
-                  <Text style={{ fontWeight: 'bold' }}>Codigo Cliente :</Text>
-                  <Text style={{ marginLeft: 10, color: 'purple' }}>{item.codcli}</Text>
-                </View>
-                <View style={{ flexDirection: 'row',padding:2 }}>
-                  <Text style={{ fontWeight: 'bold' }}>Valor Total :</Text>
-                  <Text style={{ marginLeft: 10, color: 'purple' }}> {formatarMoeda(parseInt(item.vltotal, 10))}</Text>
-                </View>
-                <View style={{ flexDirection: 'row',padding:2 }}>
-                  <Text style={{ fontWeight: 'bold' }}>Data de Saida Da Nota :</Text>
-                  <Text style={{ marginLeft: 10, color: 'purple' }}>{formatData( new Date(item.dtsaida))}</Text>
-                </View>
-                <View style={{ flexDirection: 'row',padding:2 }}>
-                  <Text style={{ fontWeight: 'bold' }}>Vendedor :</Text>
-                  <Text style={{ marginLeft: 10, color: 'purple' }}>{item.vendedor}</Text>
-                </View>
+        <ScrollView>
+          {data.map(
+            (item: ConsultaVendasType, index: React.Key | null | undefined) => (
+              <View key={index}>
+                {item.cliente !== '' ? (
+                  <View key={item.numnota}>
+                    <VendasViewCenter>
+                      <View>
+                        <VendasViewAling>
+                          <TextBoldBlue >
+                            {item.cliente}
+                          </TextBoldBlue>
+                        </VendasViewAling>
+                        <VendasViewp >
+                          <TextBold >
+                            Numero Da Nota :
+                          </TextBold>
+                          <TextMarginColor >
+                            {item.numnota}
+                          </TextMarginColor>
+                        </VendasViewp>
+                        <VendasViewp >
+                          <TextBold >
+                            Codigo Cliente :
+                          </TextBold>
+                          <TextMarginColor>
+                            {item.codcli}
+                          </TextMarginColor>
+                        </VendasViewp>
+                        <VendasViewp >
+                          <TextBold >
+                            Valor Total :
+                          </TextBold>
+                          <TextMarginColor >
+                            {' '}
+                            {formatarMoeda(parseInt(item.vltotal, 10))}
+                          </TextMarginColor>
+                        </VendasViewp>
+                        <VendasViewp >
+                          <TextBold >
+                            Data de Saida Da Nota :
+                          </TextBold>
+                          <TextMarginColor >
+                            {formatData(new Date(item.dtsaida))}
+                          </TextMarginColor>
+                        </VendasViewp>
+                        <VendasViewp>
+                          <TextBold >
+                            Vendedor :
+                          </TextBold>
+                          <TextMarginColor >
+                            {item.vendedor}
+                          </TextMarginColor>
+                        </VendasViewp>
+                      </View>
+                    </VendasViewCenter>
+                  </View>
+                ) : null}
               </View>
-            </View>
-          </View>
-        ) : null}
-      </View>
-    ))}
-  </ScrollView>
-  </View>
+            ),
+          )}
+        </ScrollView>
+      </VendasViewAling>
     </ScrollView>
   );
 };

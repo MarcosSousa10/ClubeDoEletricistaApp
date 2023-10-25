@@ -2,36 +2,15 @@
 import { useRef } from 'react';
 import Button from '../../../shared/components/button/Button';
 import { useCreateUser } from '../hooks/useCreateUser';
-import { CreateUserContainer } from '../styles/createUser.style';
-import { TextInput, View } from 'react-native';
+import { CreateUserContainer, CreateUserIcon, CreateUserText, CreateUserView } from '../styles/createUser.style';
+import { TextInput } from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import Input from '../../../shared/components/input/input';
-import Text from '../../../shared/components/text/Text';
 import { theme } from '../../../shared/themes/theme';
 import { textTypes } from '../../../shared/components/text/textTypes';
-import { Icon } from '../../../shared/icon/Icon';
 
 const CreateUser = () => {
-  //   await axios.put(`https://othondecarvalho.com.br:5555/pc/teste/${codprofissional}`, {
-  //     descricao: descricao,
-  //     cnpj: cnpj,
-  //     fone: telefone,
-  //     email: email,
-  //     tipoprof: "PC",
-  //     percomprof: "2",
-  //     senha: senha,
-  //     uf: uf,
-  //     dtnasc: dtnasc,
-  //     rg_ie: rg_ie,
-  //     profissao: valorSelecionado,
-  //     bairro: bairro,
-  //     celular: celular,
-  //     cep: cep,
-  //     cidade: cidade,
-  //     endereco: endereco,
-  //     dtcadastro: dtcadastro
-  // }).then(Response => {
   const { createUser, disabled, loading, handleOnChangeInput, setValorSelecionado,handleValidarUser } = useCreateUser();
   const phoneInput = useRef<TextInput>(null);
   const emailInput = useRef<TextInput>(null);
@@ -179,7 +158,7 @@ const CreateUser = () => {
         secureTextEntry
         ref={confirmePasswordInput}
       />
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+      <CreateUserView>
         <SelectDropdown
       buttonStyle={{width:'70%',borderColor:'black',borderWidth:1, height:20, alignItems: 'center'}}
          defaultButtonText="selecione uma Profissão "
@@ -195,8 +174,8 @@ const CreateUser = () => {
           return item;
         }}
       />
-      <Icon name="arrow-down"  style={{position:'absolute',right: 56,top: 4}}/>
-      </View>
+      <CreateUserIcon name="arrow-down"/>
+      </CreateUserView>
       <Button
         disabled={disabled}
         onPress={handleValidarUser}
@@ -204,7 +183,13 @@ const CreateUser = () => {
         margin="0px 0px 0px 0px"
         title="Criar usúario"
       />
-      <Text color={theme.colors.orangeTheme.orange80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD} margin="0px 0px 40px 0px" style={{textAlign:'center'}}>O botão só será ativado quando todos os campos estiverem preenchidos de maneira correta.</Text>
+      <CreateUserText
+      color={theme.colors.orangeTheme.orange80}
+      type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}
+      margin="0px 0px 40px 0px"
+      >
+        O botão só será ativado quando todos os campos estiverem preenchidos de maneira correta.
+      </CreateUserText>
     </CreateUserContainer>
   );
 };
