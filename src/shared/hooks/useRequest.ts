@@ -9,7 +9,6 @@ import { MenuUrl } from '../components/enums/MenuUrl.enum';
 import { InfoType } from '../../types/infoType';
 import { useGlobalRducer } from '../../story/reducers/globalReducer/useGlobalReducer';
 export const useRequest = () => {
-  
   interface requestProps<T, B = unknown> {
     url: string;
     method: MetgoType;

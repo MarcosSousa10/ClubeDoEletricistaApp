@@ -23,7 +23,7 @@ const Perfil = () => {
     request<InformacaoType>({
       url: `https://othondecarvalho.com.br:5555/pc/informacao/${await gettCodProf()}`,
       method: MethodEnum.GET,
-    }).then((Response) => { setInformacao(Response); });
+    }).then((Response) => { setInformacao(Response); }).catch(()=>{logout(navigation);});
   };
 
   useEffect(() => {

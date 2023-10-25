@@ -154,7 +154,7 @@ const CreateUser = () => {
         onChange={(event) => handleOnChangeInput(event, 'cep')}
         margin="0px 0px 16px 0px"
         placeholder="Digite"
-        type='cep'
+        type="cep"
         maxLength={9}
         ref={cepInput}
         title="CEP :"
@@ -179,7 +179,7 @@ const CreateUser = () => {
         secureTextEntry
         ref={confirmePasswordInput}
       />
-      <View style={{alignItems:'center', marginBottom:20}}>
+      <View style={{ alignItems: 'center', marginBottom: 20 }}>
         <SelectDropdown
       buttonStyle={{width:'70%',borderColor:'black',borderWidth:1, height:20, alignItems: 'center'}}
          defaultButtonText="selecione uma Profissão "
@@ -195,7 +195,7 @@ const CreateUser = () => {
           return item;
         }}
       />
-      <Icon name='arrow-down'  style={{position:'absolute',right: 56,top: 4}}/>
+      <Icon name="arrow-down"  style={{position:'absolute',right: 56,top: 4}}/>
       </View>
       <Button
         disabled={disabled}
@@ -204,7 +204,7 @@ const CreateUser = () => {
         margin="0px 0px 0px 0px"
         title="Criar usúario"
       />
-      <Text color={theme.colors.orangeTheme.orange80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD} margin='0px 0px 40px 0px' style={{textAlign:'center'}}>O botão só será ativado quando todos os campos estiverem preenchidos de maneira correta.</Text>
+      <Text color={theme.colors.orangeTheme.orange80} type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD} margin="0px 0px 40px 0px" style={{textAlign:'center'}}>O botão só será ativado quando todos os campos estiverem preenchidos de maneira correta.</Text>
     </CreateUserContainer>
   );
 };

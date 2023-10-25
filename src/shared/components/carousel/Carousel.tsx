@@ -5,6 +5,8 @@ import { useRequest } from '../../hooks/useRequest';
 import { CarrocelType } from '../../../types/CarrocelType';
 import { URL_CARROCEL } from '../../constants/url';
 import { MethodEnum } from '../../../enums/methods.enum';
+import { logout } from '../../functions/connection/auth';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 
 const larguraDaTela = Dimensions.get('window').width;
 const Carrossel = () => {
@@ -12,6 +14,7 @@ const Carrossel = () => {
   const [images, setImages] = useState([]);
   const scrollViewRef = useRef<ScrollView | null>(null);
   const imageIndexRef = useRef(0);
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   useEffect(() => {
     const fetchImages = () => {
@@ -22,7 +25,7 @@ const Carrossel = () => {
         if (response.length > 0) {
           setImages(response);
         }
-      }).catch((error)=>{console.log("dsadadadsadsadadadaddadasdasdasdasdasdadadadadaa"+error)});
+      }).catch(()=>{logout(navigation);});
     };
     fetchImages();
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope *//* eslint-disable prettier/prettier */
+/* eslint-disable prettier/prettier */
 import {  NativeSyntheticEvent, TextInput, TextInputChangeEventData, TextInputProps, View } from 'react-native';
 import { ContainerInput, IconEye, IconSearch } from './input.style';
 import Text from '../text/Text';
